@@ -1,0 +1,404 @@
+MAIN FONT:
+font-family: 'NewYork', serif;
+
+SECONDARY FONT:
+ font-family: 'Montserrat', sans-serif;
+
+ CURSIVE FONT FOR STYLES:
+ font-family: 'modernline - Personal Use', sans-serif;
+
+
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquire | Veil & Varmala</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ffffff;
+            --secondary: #C3B8AC;
+            --tertiary: #323538;
+            --textcolor: #333333;
+            --dusty-rose: #C7A8A3;
+            --sage: #A3B8A7;
+            --skintone-color: #DE9B72;
+            --dark-color: #3A3D3E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--textcolor);
+            background: var(--primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            line-height: 1.2;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        /* Navigation */
+        .hero-text {
+            margin-top: 5px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+                
+        .logo-container {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .logotitle {
+            transform: translateY(-5px);
+            width: 400px;
+            height: auto;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Navigation container */
+        .nav-links-hero {
+            margin-top: 60px;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        /* Navigation link styling */
+        .nav-links-hero a {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            white-space: nowrap;
+            height: 60px;
+        }
+
+        /* Second line (span) */
+        .nav-links-hero a span {
+            margin-top: 2px;
+            font-size: 1rem;
+            font-weight: 300;
+            text-transform: capitalize;
+            letter-spacing: 0.1em;
+            display: block;
+        }
+
+        /* Hover styles */
+        .nav-links-hero a:hover {
+            color: var(--secondary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Form Column */
+        .form-column {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .inquiry-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .inquiry-header h2 {
+            font-size: 2.8rem;
+            color: var(--tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .inquiry-header p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--tertiary);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem;
+            border: 1px solid #ddd;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f9f9f9;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--skintone-color);
+            box-shadow: 0 0 0 2px rgba(222, 155, 114, 0.2);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333538' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background-color: var(--tertiary);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--skintone-color);
+        }
+
+        /* Image Column */
+        .image-column {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .image-item {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .image-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .nav-links-hero {
+                margin-top: 30px;
+                gap: 1rem;
+            }
+            
+            .nav-links-hero a {
+                font-size: 0.9rem;
+            }
+            
+            .logotitle {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links-hero {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links-hero a {
+                height: auto;
+                margin-bottom: 10px;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .form-column, .image-column {
+                padding: 1rem;
+            }
+            
+            .inquiry-header h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-text">
+        <div class="logo-container">
+            <img src="https://via.placeholder.com/400x100?text=Veil+%26+Varmala+Logo" alt="Veil & Varmala Logo" class="logotitle">
+        </div>
+        <div class="nav-links-hero">
+            <a href="index.php">HOME</a>
+            <a href="about.php">ABOUT</a>
+            <a href="portfolio.php">GALLERIES</a>
+            <a href="veil&varmalaexperience.php">EXPERIENCE</a>
+            <a href="inquire.php">INQUIRE</a>
+        </div>
+    </section>
+
+    <div class="main-content">
+        <!-- Form Column -->
+        <div class="form-column">
+            <div class="inquiry-header">
+                <h2>INQUIRE</h2>
+                <p>We want every photo and film to be a dream our couples can revisit.</p>
+                <p>Hopefully, you're as excited to get started as we are to hear from you!</p>
+                <p>Please fill out the form below and we will be in touch within 24 hours.</p>
+            </div>
+
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" class="form-control" placeholder="First and Last" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="instagram">Instagram Handle</label>
+                    <input type="text" id="instagram" class="form-control" placeholder="Instagram Handle">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="Youremail@gmail.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="91915557777">
+                </div>
+
+                <div class="form-group">
+                    <label for="wedding-date">Wedding Date</label>
+                    <input type="date" id="wedding-date" class="form-control" placeholder="mm/dd/yyyy">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Wedding Location (Venue and City)</label>
+                    <input type="text" id="location" class="form-control" placeholder="Venue name and City name">
+                </div>
+
+                <div class="form-group">
+                    <label for="wedding-type">Wedding Type?</label>
+                    <select id="wedding-type" class="form-control">
+                        <option value="">Select an option</option>
+                        <option value="traditional">Traditional</option>
+                        <option value="modern">Modern</option>
+                        <option value="fusion">Fusion</option>
+                        <option value="elopement">Elopement</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="hear-about">How did you hear about us?</label>
+                    <input type="text" id="hear-about" class="form-control" placeholder="Wedding Vendor, friend, please share their names">
+                </div>
+
+                <div class="form-group">
+                    <label for="planner">Who is your wedding planner? (If you have one)</label>
+                    <input type="text" id="planner" class="form-control" placeholder="We'd love to see their style">
+                </div>
+
+                <div class="form-group">
+                    <label for="budget">What is your Estimated Budget for Photography?</label>
+                    <input type="text" id="budget" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="details">Tell us more about your wedding and how do you envision your photos?</label>
+                    <textarea id="details" class="form-control" rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">SEND INQUIRY</button>
+            </form>
+        </div>
+
+        <!-- Image Column -->
+        <div class="image-column">
+            <div class="image-item">
+                <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Wedding Photography">
+            </div>
+            <div class="image-item">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=869&q=80" alt="Bride and Groom">
+            </div>
+            <div class="image-item">
+                <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Wedding Details">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer would be included here -->
+</body>
+</html>

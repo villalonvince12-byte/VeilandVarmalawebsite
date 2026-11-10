@@ -1,0 +1,18 @@
+# Enable Rewrite Engine
+RewriteEngine On
+
+# Redirect /index.php or /index to root /
+RewriteCond %{THE_REQUEST} /index(\.php)? [NC]
+RewriteRule ^index(\.php)?$ / [R=301,L]
+
+# Serve index.php as the root
+DirectoryIndex index.php
+
+# Internally rewrite extension-less URLs to .php files
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Optional: Redirect .php URLs to extension-less version
+RewriteCond %{THE_REQUEST} \s([^.]+)\.php [NC]
+RewriteRule ^ %1 [R=301,L]

@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# Environment and credentials
+.env
+.env.*
+config.php
+db_connect.php
+
+# Database backups
+*.sql
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# Private uploads
+uploads/*
+
+# Testing and diagnostic files
+phpinfo.php
+test.php

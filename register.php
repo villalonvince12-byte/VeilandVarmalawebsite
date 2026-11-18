@@ -20,36 +20,6 @@
 <div class="main-content">
     <h2>Create an Account</h2>
 
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        include 'db_connect.php';
-
-        $email = trim($_POST['email']);
-        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-        $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
-        $check->bind_param("s", $email);
-        $check->execute();
-        $check->store_result();
-
-        if ($check->num_rows > 0) {
-            echo "<p style='color:red;'>Email already registered.</p>";
-        } else {
-            $stmt = $conn->prepare("INSERT INTO users (email, password) VALUES (?, ?)");
-            $stmt->bind_param("ss", $email, $password);
-
-            if ($stmt->execute()) {
-                echo "<p style='color:green;'>Registration successful 🎉 <a href='login.php'>Login here</a></p>";
-            } else {
-                echo "<p style='color:red;'>Error: " . $stmt->error . "</p>";
-            }
-            $stmt->close();
-        }
-        $check->close();
-        $conn->close();
-    }
-    ?>
-
     <form method="POST">
         <div class="form-group">
             <label>Email Address</label>

@@ -24,18 +24,21 @@ if (!empty($wedding['cover_photo'])) {
     if (file_exists($path)) unlink($path);
 }
 
-// Delete gallery photos (only if gallery table exists)
-$tableCheck = $conn->query("SHOW TABLES LIKE 'gallery'");
-if ($tableCheck && $tableCheck->num_rows > 0) {
-    $gallery = $conn->query("SELECT * FROM gallery WHERE wedding_id = $id");
-    if ($gallery) {
-        while ($photo = $gallery->fetch_assoc()) {
-            $path = __DIR__ . '/assets/uploads/' . $photo['filename'];
-            if (file_exists($path)) unlink($path);
-        }
-    }
-    $conn->query("DELETE FROM gallery WHERE wedding_id = $id");
+// Delete gallery photos from wedding_gallery table
+$stmt = $conn->prepare("SELECT filename FROM wedding_gallery WHERE wedding_id = ?");
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$gallery = $stmt->get_result();
+while ($photo = $gallery->fetch_assoc()) {
+    $path = __DIR__ . '/assets/gallery/' . $photo['filename'];
+    if (file_exists($path)) unlink($path);
 }
+$stmt->close();
+
+$deleteGallery = $conn->prepare("DELETE FROM wedding_gallery WHERE wedding_id = ?");
+$deleteGallery->bind_param('i', $id);
+$deleteGallery->execute();
+$deleteGallery->close();
 
 // Delete the wedding record
 $conn->query("DELETE FROM weddings WHERE id = $id");

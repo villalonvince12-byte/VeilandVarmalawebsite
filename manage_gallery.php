@@ -11,13 +11,29 @@ if (!$wedding) { header("Location: dashboard.php"); exit(); }
 
 // Handle photo upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['photos']['name'][0])) {
+    $uploadDir = __DIR__ . '/assets/gallery/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+    $stmt = $conn->prepare("SELECT COALESCE(MAX(display_order),0) FROM wedding_gallery WHERE wedding_id = ?");
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->bind_result($nextOrder);
+    $stmt->fetch();
+    $stmt->close();
+
     foreach ($_FILES['photos']['tmp_name'] as $i => $tmp) {
         if ($_FILES['photos']['error'][$i] !== UPLOAD_ERR_OK) continue;
-        $ext  = pathinfo($_FILES['photos']['name'][$i], PATHINFO_EXTENSION);
-        $name = 'gallery_' . uniqid() . '.' . $ext;
-        move_uploaded_file($tmp, "assets/uploads/$name");
-        $safe = $conn->real_escape_string($name);
-        $conn->query("INSERT INTO gallery (wedding_id, filename) VALUES ($id, '$safe')");
+        $ext = strtolower(pathinfo($_FILES['photos']['name'][$i], PATHINFO_EXTENSION));
+        if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'gif'], true)) continue;
+        $name = 'gallery_' . uniqid('', true) . '.' . $ext;
+        if (!move_uploaded_file($tmp, $uploadDir . $name)) continue;
+
+        $nextOrder++;
+        $caption = '';
+        $insert = $conn->prepare("INSERT INTO wedding_gallery (wedding_id, filename, caption, display_order) VALUES (?, ?, ?, ?)");
+        $insert->bind_param('issi', $id, $name, $caption, $nextOrder);
+        $insert->execute();
+        $insert->close();
     }
     header("Location: manage_gallery.php?id=$id");
     exit();
@@ -26,17 +42,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['photos']['name'][0]
 // Handle delete single photo
 if (isset($_GET['delete_photo'])) {
     $pid = intval($_GET['delete_photo']);
-    $photo = $conn->query("SELECT * FROM gallery WHERE id = $pid AND wedding_id = $id")->fetch_assoc();
+    $stmt = $conn->prepare("SELECT filename FROM wedding_gallery WHERE id = ? AND wedding_id = ?");
+    $stmt->bind_param('ii', $pid, $id);
+    $stmt->execute();
+    $photo = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+
     if ($photo) {
-        $path = __DIR__ . '/assets/uploads/' . $photo['filename'];
+        $path = __DIR__ . '/assets/gallery/' . $photo['filename'];
         if (file_exists($path)) unlink($path);
-        $conn->query("DELETE FROM gallery WHERE id = $pid");
+        $delete = $conn->prepare("DELETE FROM wedding_gallery WHERE id = ? AND wedding_id = ?");
+        $delete->bind_param('ii', $pid, $id);
+        $delete->execute();
+        $delete->close();
     }
     header("Location: manage_gallery.php?id=$id");
     exit();
 }
 
-$photos = $conn->query("SELECT * FROM gallery WHERE wedding_id = $id ORDER BY id DESC");
+$photos = $conn->query("SELECT * FROM wedding_gallery WHERE wedding_id = $id ORDER BY display_order ASC, id ASC");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +142,7 @@ $photos = $conn->query("SELECT * FROM gallery WHERE wedding_id = $id ORDER BY id
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         <?php while ($photo = $photos->fetch_assoc()): ?>
           <div class="photo-card group">
-            <img src="assets/uploads/<?= htmlspecialchars($photo['filename']) ?>" alt="gallery photo" loading="lazy">
+            <img src="assets/gallery/<?= htmlspecialchars($photo['filename']) ?>" alt="gallery photo" loading="lazy">
             <a href="manage_gallery.php?id=<?= $id ?>&delete_photo=<?= $photo['id'] ?>"
                onclick="return confirm('Delete this photo?')"
                class="delete-btn">
